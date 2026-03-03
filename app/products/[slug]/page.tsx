@@ -1,5 +1,6 @@
 import { fetchProductBySlug } from "../../../src/modules/catalog/services/catalogApi";
 import { QuoteForm } from "../../../src/modules/catalog/components/QuoteForm";
+import { DiscountTiers } from "../../../src/modules/catalog/components/DiscountTiers";
 
 interface ProductPageProps {
   params: {
@@ -40,6 +41,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {product.description && (
             <p className="text-gray-700">{product.description}</p>
           )}
+          <DiscountTiers/>
         </section>
 
         {/* Columna derecha: formulario de cotización */}
