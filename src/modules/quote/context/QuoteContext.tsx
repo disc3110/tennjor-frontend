@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { Product, ProductVariant } from "../../catalog/services/types";
 
 export interface QuoteItem {
@@ -18,11 +18,33 @@ interface QuoteContextValue {
 }
 
 const QuoteContext = createContext<QuoteContextValue | undefined>(undefined);
+const STORAGE_KEY = "tennjor_quote_cart_v1";
 
 export function QuoteProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<QuoteItem[]>([]);
 
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) setItems(parsed);
+    } catch (err) {
+      console.warn("Failed to load quote cart from storage", err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch (err) {
+      console.warn("Failed to save quote cart to storage", err);
+    }
+  }, [items]);
+
   const addItem = (item: QuoteItem) => {
+    
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === item.product.id);
 
@@ -50,7 +72,12 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
-  const clear = () => setItems([]);
+  const clear = () => {
+    setItems([]);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+  };
 
   return (
     <QuoteContext.Provider
