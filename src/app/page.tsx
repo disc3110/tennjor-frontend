@@ -1,5 +1,5 @@
-import { fetchProducts } from "../src/modules/catalog/services/catalogApi";
-import { ProductList } from "../src/modules/catalog/components/ProductList";
+import { fetchProducts } from "../modules/catalog/services/catalogApi";
+import { ProductList } from "../modules/catalog/components/ProductList";
 import { Product } from "@/src/modules/catalog/services/types";
 
 export default async function HomePage() {
