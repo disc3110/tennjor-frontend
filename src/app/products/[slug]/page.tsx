@@ -1,6 +1,6 @@
-import { fetchProductBySlug } from "../../../src/modules/catalog/services/catalogApi";
-import { QuoteForm } from "../../../src/modules/catalog/components/QuoteForm";
-import { DiscountTiers } from "../../../src/modules/catalog/components/DiscountTiers";
+import { fetchProductBySlug } from "../../../modules/catalog/services/catalogApi";
+import { QuoteForm } from "../../../modules/catalog/components/QuoteForm";
+import { DiscountTiers } from "../../../modules/catalog/components/DiscountTiers";
 
 interface ProductPageProps {
   params: {

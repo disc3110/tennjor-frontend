@@ -7,6 +7,7 @@ import {
   buildWhatsAppQuoteUrl,
   type QuoteCustomerInfo,
 } from "../../..//modules/common/lib/quote";
+import { useQuote } from "@/modules/quote/context/QuoteContext";
 
 interface QuoteFormProps {
   product: Product;
@@ -24,6 +25,8 @@ export function QuoteForm({ product, productUrl }: QuoteFormProps) {
     phone: "",
     message: "",
   });
+
+  const { addItem , items} = useQuote();
 
   const selectedVariant: ProductVariant | null = useMemo(() => {
     return product.variants.find((v) => v.id === selectedVariantId) ?? null;
@@ -168,6 +171,31 @@ export function QuoteForm({ product, productUrl }: QuoteFormProps) {
 
       {/* Botones */}
       <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <button
+          disabled={!isValid}
+          type="button"
+          onClick={() => {
+            if (!selectedVariant || quantity <= 0) return;
+
+            addItem({
+              product,
+              variant: selectedVariant,
+              quantity,
+            });
+
+            console.log("Producto agregado a la cotización:", {
+              product,
+              variant: selectedVariant,
+              quantity,
+            });
+
+            console.log("Items en cotización:", items);
+
+          }}
+          className="w-full rounded bg-black text-white py-2 text-sm font-semibold hover:bg-gray-800"
+        >
+          Agregar a cotización
+        </button>
         <button
           type="submit"
           disabled={!isValid}
