@@ -213,7 +213,7 @@ export function CategoryHeroCarousel({
           type="button"
           onClick={prev}
           aria-label="Anterior"
-          className="pointer-events-auto h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/15 transition flex items-center justify-center"
+          className="pointer-events-auto hidden md:flex h-10 w-10 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/15 transition items-center justify-center"
         >
           ‹
         </button>
@@ -221,7 +221,7 @@ export function CategoryHeroCarousel({
           type="button"
           onClick={next}
           aria-label="Siguiente"
-          className="pointer-events-auto h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/15 transition flex items-center justify-center"
+          className="pointer-events-auto hidden md:flex h-10 w-10 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/15 transition items-center justify-center"
         >
           ›
         </button>
