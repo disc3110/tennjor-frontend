@@ -1,6 +1,13 @@
-import "./globals.css";
-import { AppProviders } from "./providers";
+import type { Metadata } from "next";
+import React from "react";
+import { AppProviders } from "@/app/providers";
 import { Navbar } from "@/modules/common/components/navbar";
+import "@/app/globals.css";
+
+export const metadata: Metadata = {
+  title: "Tennjor",
+  description: "Tennjor",
+};
 
 export default function RootLayout({
   children,
@@ -9,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-900">
+      <body>
         <AppProviders>
           <Navbar />
           {children}
