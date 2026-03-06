@@ -37,14 +37,11 @@ export function CategoryHeroCarousel({
   const touchLastX = useRef<number | null>(null);
   const isSwiping = useRef(false);
 
-  const [bgLoaded, setBgLoaded] = useState(false);
-
   const count = safeSlides.length;
   const clampedIndex = count ? Math.min(index, count - 1) : 0;
 
   const goTo = (i: number) => {
     if (!count) return;
-    setBgLoaded(false);
     setIndex((i + count) % count);
   };
 
@@ -103,7 +100,6 @@ export function CategoryHeroCarousel({
     if (!count || paused) return;
 
     timerRef.current = window.setInterval(() => {
-      setBgLoaded(false);
       setIndex((cur) => (cur + 1) % count);
     }, intervalMs);
 
@@ -135,6 +131,7 @@ export function CategoryHeroCarousel({
       <div className="absolute inset-0 bg-zinc-900">
         {/* Mobile */}
         <Image
+          key={`mobile-${slide.imageMobileUrl ?? slide.imageWebUrl}`}
           src={slide.imageMobileUrl ?? slide.imageWebUrl}
           alt={`${slide.title} ${slide.highlight ?? ""}`.trim()}
           fill
@@ -142,16 +139,13 @@ export function CategoryHeroCarousel({
           loading={isFirst ? "eager" : "lazy"}
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
-          onLoad={() => setBgLoaded(true)}
-          className={
-            "object-cover md:hidden transition-opacity duration-500 " +
-            (bgLoaded ? "opacity-100" : "opacity-0")
-          }
+          className="object-cover md:hidden"
           sizes="100vw"
         />
 
         {/* Desktop */}
         <Image
+          key={`desktop-${slide.imageWebUrl}`}
           src={slide.imageWebUrl}
           alt={`${slide.title} ${slide.highlight ?? ""}`.trim()}
           fill
@@ -159,11 +153,7 @@ export function CategoryHeroCarousel({
           loading={isFirst ? "eager" : "lazy"}
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
-          onLoad={() => setBgLoaded(true)}
-          className={
-            "object-cover hidden md:block transition-opacity duration-500 " +
-            (bgLoaded ? "opacity-100" : "opacity-0")
-          }
+          className="object-cover hidden md:block"
           sizes="100vw"
         />
 
