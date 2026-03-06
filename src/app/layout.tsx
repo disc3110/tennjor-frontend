@@ -1,17 +1,25 @@
-import "./globals.css";
-import type { ReactNode } from "react";
-import { AppProviders } from "./providers";
+import type { Metadata } from "next";
+import React from "react";
+import { AppProviders } from "@/app/providers";
 import { Navbar } from "@/modules/common/components/navbar";
+import "@/app/globals.css";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export const metadata: Metadata = {
+  title: "Tennjor",
+  description: "Tennjor",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="es">
-      <body className="bg-[var(--background)] text-[var(--foreground)]">
+    <html lang="en">
+      <body>
         <AppProviders>
           <Navbar />
-          <main className="page">
-            <div className="container-page py-8 md:py-10">{children}</div>
-          </main>
+          {children}
         </AppProviders>
       </body>
     </html>

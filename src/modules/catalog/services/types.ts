@@ -3,6 +3,8 @@ export interface Category {
   name: string;
   slug: string;
   isActive: boolean;
+  imageWebUrl?: string | null;
+  imageMobileUrl?: string | null;
 }
 
 export interface ProductImage {
