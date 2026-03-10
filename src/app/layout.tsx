@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 import { AppProviders } from "@/app/providers";
 import { Navbar } from "@/modules/common/components/navbar";
+import { Analytics } from "@vercel/analytics/next"
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
         <AppProviders>
           <Navbar />
           {children}
+          <Analytics />
         </AppProviders>
       </body>
     </html>

@@ -14,6 +14,7 @@ export default function QuotePage() {
     name: "",
     email: "",
     phone: "",
+    city: "",
     message: "",
   });
 
@@ -37,7 +38,7 @@ export default function QuotePage() {
           </p>
           <Link
             href="/catalog"
-            className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-black transition-colors"
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
           >
             Ir al catálogo
           </Link>
@@ -88,6 +89,16 @@ export default function QuotePage() {
             customer={customer}
             setCustomer={setCustomer}
             items={items}
+            onSuccessfulSubmit={() => {
+              clear();
+              setCustomer({
+                name: "",
+                email: "",
+                phone: "",
+                city: "",
+                message: "",
+              });
+            }}
           />
         </aside>
       </div>

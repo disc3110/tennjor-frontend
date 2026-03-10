@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/modules/catalog/services/types";
+import { resolveImageUrl } from "@/modules/common/lib/image";
 
 type Props = {
   product: Product;
@@ -17,20 +18,20 @@ export function ProductMiniCard({ product, href, onQuickAdd }: Props) {
       ((product as unknown as { slug?: string }).slug || product.id) as string
     }`;
 
-  const img = product.images?.[0]?.url;
+  const img = resolveImageUrl(product.images?.[0]);
   const alt = product.images?.[0]?.alt || product.name;
 
   return (
     <Link href={resolvedHref} className="block">
       <div className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition hover:shadow-md">
-        <div className="relative aspect-[3/2] w-full bg-white">
+        <div className="relative flex aspect-[3/2] w-full items-center justify-center bg-white p-3">
           {img ? (
             <Image
               src={img}
               alt={alt}
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 240px"
-              className="object-contain transition-transform duration-300 group-hover:scale-[1.06]"
+              className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.06]"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-xs text-[var(--muted)]">
