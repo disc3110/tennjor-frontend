@@ -28,11 +28,12 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const parsed = JSON.parse(raw);
+      // Hydrate client cart from persisted storage on first render.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (Array.isArray(parsed)) setItems(parsed);
     } catch (err) {
       console.warn("Failed to load quote cart from storage", err);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -44,7 +45,6 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const addItem = (item: QuoteItem) => {
-    
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === item.product.id);
 

@@ -6,10 +6,9 @@ import type { Product, ProductVariant } from "../services/types";
 
 interface QuoteFormProps {
   product: Product;
-  productUrl: string;
 }
 
-export function QuoteForm({ product, productUrl }: QuoteFormProps) {
+export function QuoteForm({ product }: QuoteFormProps) {
   const [selectedVariantId, setSelectedVariantId] = useState<string>(
     product.variants[0]?.id ?? ""
   );

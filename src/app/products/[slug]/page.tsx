@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { fetchProductBySlug } from "@/modules/catalog/services/catalogApi";
 import { QuoteForm } from "@/modules/catalog/components/QuoteForm";
+import { resolveImageUrl } from "@/modules/common/lib/image";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -14,22 +15,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const product = await fetchProductBySlug(slug);
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const productUrl = `${baseUrl}/products/${product.slug ?? slug}`;
+  const primaryImage = resolveImageUrl(product.images?.[0]);
 
   return (
     <div className="page p-6 md:p-10">
       <div className="grid gap-10 md:grid-cols-2">
         <section className="flex flex-col gap-5">
-          <div className="relative aspect-square overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-2)]">
-            {product.images?.[0] ? (
+          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-4">
+            {primaryImage ? (
               <Image
-                src={product.images[0].url}
+                src={primaryImage}
                 alt={product.images[0].alt ?? product.name}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
+                className="object-contain p-3"
                 priority
               />
             ) : (
@@ -66,7 +65,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </p>
             </div>
 
-            <QuoteForm product={product} productUrl={productUrl} />
+            <QuoteForm product={product} />
           </div>
         </section>
       </div>

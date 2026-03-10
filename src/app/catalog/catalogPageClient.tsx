@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { BULK_DISCOUNT_TIERS } from "@/config/bulkDiscounts";
+import { resolveImageUrl } from "@/modules/common/lib/image";
 import { fetchCategories, fetchProducts } from "@/modules/catalog/services/catalogApi";
 import type { Category, Product } from "@/modules/catalog/services/types";
 import { useQuote } from "@/modules/quote/context/QuoteContext";
@@ -149,6 +150,7 @@ function ProductList({ products }: ProductListProps) {
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
       {products.map((product) => {
         const img = product.images?.[0];
+        const imageUrl = resolveImageUrl(img);
         const sizeOptions = Array.from(new Set(product.variants?.map((variant) => variant.size) ?? []));
         const selectedSize = selectedSizeByProduct[product.id] ?? sizeOptions[0] ?? "";
 
@@ -159,14 +161,14 @@ function ProductList({ products }: ProductListProps) {
           >
             <div className="relative">
               <Link href={`/products/${product.slug}`} className="block">
-                <div className="aspect-square bg-[var(--card-2)] overflow-hidden">
-                  {img ? (
+                <div className="flex aspect-square items-center justify-center overflow-hidden bg-white p-3">
+                  {imageUrl ? (
                     <Image
-                      src={img.url}
+                      src={imageUrl}
                       alt={img.alt ?? product.name}
                       width={600}
                       height={600}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
                       loading="lazy"
                       sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />

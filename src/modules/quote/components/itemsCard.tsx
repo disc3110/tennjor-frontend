@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { resolveImageUrl } from "@/modules/common/lib/image";
 import type { QuoteItem } from "@/modules/quote/context/QuoteContext";
 
 interface ItemsCardProps {
@@ -17,18 +18,19 @@ export default function ItemsCard({
   updateQuantity,
 }: ItemsCardProps) {
   const img = item.product.images?.[0];
+  const imageUrl = resolveImageUrl(img);
 
   return (
     <div className="card p-4 sm:p-5 flex flex-col gap-4">
       <div className="flex gap-4">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-2)]">
-          {img?.url ? (
+        <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--border)] bg-white p-2">
+          {imageUrl ? (
             <Image
-              src={img.url}
+              src={imageUrl}
               alt={img.alt ?? item.product.name}
               fill
               sizes="80px"
-              className="object-cover"
+              className="object-contain p-1"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-[11px] text-[var(--muted)]">
